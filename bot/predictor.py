@@ -19,6 +19,24 @@ class ToxicityPredictor:
         Returns a dict:
           { 'is_toxic': bool, 'score': int (0-100), 'label': str }
         """
+        # 🔴 Indian toxic word override
+        INDIAN_TOXIC_WORDS = [
+        "chutiya", "bkl", "mc", "bc", "madarchod",
+        "behenchod", "gandu", "harami", "kutte",
+        "lavde", "lund", "randi","hijde","neech","gand","aand","zhaatu",
+        "zhaat","lode",]
+
+        msg_lower = message.lower()
+
+        for word in INDIAN_TOXIC_WORDS:
+            if word in msg_lower:
+                return {
+                    "is_toxic": True,
+                    "score": 95,
+                    "label": "TOXIC"
+                }
+        
+        # ── ML prediction ─────────────────────────────
         cleaned  = clean_text(message)
         vector   = self.vectorizer.transform([cleaned])
         proba    = self.model.predict_proba(vector)[0]
