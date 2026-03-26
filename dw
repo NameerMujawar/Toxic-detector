@@ -1,0 +1,7 @@
+import nltk
+# Download required NLTK datasets (run this once)
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('punkt_tab')
+nltk.download('wordnet')
+print("NLTK data downloaded successfully!")

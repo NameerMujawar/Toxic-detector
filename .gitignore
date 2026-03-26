@@ -1,0 +1,6 @@
+.env
+venv/
+dataset/
+*.csv
+*.pkl
+__pycache__/

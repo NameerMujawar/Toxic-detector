@@ -1,0 +1,37 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# ── 1. Load the dataset ──────────────────────────────────────────────────
+df = pd.read_csv('dataset/train.csv')
+
+# ── 2. Basic exploration ─────────────────────────────────────────────────
+print("Shape of dataset:", df.shape)  # rows × columns
+print("\nFirst 5 rows:")
+print(df.head())
+
+print("\nColumn names:", df.columns.tolist())
+print("\nMissing values:\n", df.isnull().sum())
+
+# ── 3. Create a single binary label ──────────────────────────────────────
+# If ANY toxic column = 1, the message is considered toxic
+toxic_cols = ['toxic', 'severe_toxic', 'obscene',
+              'threat', 'insult', 'identity_hate']
+
+df['is_toxic'] = df[toxic_cols].max(axis=1)  # 1 if any column is 1
+
+print("\nLabel distribution:")
+print(df['is_toxic'].value_counts())
+print("\nAs percentages:")
+print(df['is_toxic'].value_counts(normalize=True) * 100)
+
+# ── 4. Sample messages ───────────────────────────────────────────────────
+print("\n--- Sample NON-TOXIC message ---")
+print(df[df['is_toxic']==0]['comment_text'].iloc[0])
+
+print("\n--- Sample TOXIC message ---")
+print(df[df['is_toxic']==1]['comment_text'].iloc[0])
+
+# ── 5. Save processed dataset ────────────────────────────────────────────
+df[['comment_text', 'is_toxic']].to_csv('dataset/processed.csv', index=False)
+print("\nProcessed dataset saved to dataset/processed.csv")
