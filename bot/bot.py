@@ -27,8 +27,8 @@ warning_count = {}
 @bot.event
 async def on_ready():
     guild = discord.Object(id=1427250454693412936)
-    await bot.tree.sync(guild=guild)
-    print("Slash commands synced")
+    synced = await bot.tree.sync(guild=guild)
+    print(f"✅ Synced {len(synced)} commands")
     print(f"Logged in as {bot.user}")
     print(f"✅ Bot online as: {bot.user}")
     print(f"   Toxicity threshold: {THRESHOLD}%")
@@ -111,7 +111,7 @@ async def on_message(message):
                     f"**{warns} warnings**. Consider manual action."
                 )
 
-@bot.tree.command(name="toxicity", description="Check toxicity of a message")
+@bot.tree.command(name="toxicity", description="Check toxicity of a message",guild=discord.Object(id=1427250454693412936))
 async def toxicity(interaction: discord.Interaction, text: str):
     result = predictor.predict(text)
 
