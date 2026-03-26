@@ -26,7 +26,11 @@ warning_count = {}
 
 @bot.event
 async def on_ready():
-    await bot.tree.sync()
+    try:
+        synced = await bot.tree.sync()
+        print(f"Synced {len(synced)} slash commands")
+    except Exception as e:
+        print(e)
     print(f"Logged in as {bot.user}")
     print(f"✅ Bot online as: {bot.user}")
     print(f"   Toxicity threshold: {THRESHOLD}%")
