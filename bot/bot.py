@@ -1,5 +1,6 @@
 import discord
 import os
+from discord import app_commands
 from datetime import datetime
 from dotenv import load_dotenv
 from predictor import ToxicityPredictor
@@ -24,6 +25,8 @@ warning_count = {}
 
 @bot.event
 async def on_ready():
+    await bot.tree.sync()
+    print(f"Logged in as {bot.user}")
     print(f"✅ Bot online as: {bot.user}")
     print(f"   Toxicity threshold: {THRESHOLD}%")
     print(f"   Logging to channel: #{LOG_CHAN}")
@@ -108,3 +111,17 @@ async def on_message(message):
 
 # Run the bot (this is the last line — it starts the event loop)
 bot.run(TOKEN)
+
+@bot.tree.command(name="toxicity", description="Check toxicity of a message")
+async def toxicity(interaction: discord.Interaction, text: str):
+    result = predictor.predict(text)
+
+    score = result["score"]
+    label = result["label"]
+
+    await interaction.response.send_message(
+        f"🧠 **Toxicity Check**\n"
+        f"Message: {text}\n"
+        f"Score: **{score}%**\n"
+        f"Label: **{label.upper()}**"
+    )
