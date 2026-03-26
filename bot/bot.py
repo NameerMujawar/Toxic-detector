@@ -26,11 +26,9 @@ warning_count = {}
 
 @bot.event
 async def on_ready():
-    try:
-        synced = await bot.tree.sync()
-        print(f"Synced {len(synced)} slash commands")
-    except Exception as e:
-        print(e)
+    guild = discord.Object(id=1427250454693412936)
+    await bot.tree.sync(guild=guild)
+    print("Slash commands synced")
     print(f"Logged in as {bot.user}")
     print(f"✅ Bot online as: {bot.user}")
     print(f"   Toxicity threshold: {THRESHOLD}%")
@@ -113,10 +111,6 @@ async def on_message(message):
                     f"**{warns} warnings**. Consider manual action."
                 )
 
-
-# Run the bot (this is the last line — it starts the event loop)
-bot.run(TOKEN)
-
 @bot.tree.command(name="toxicity", description="Check toxicity of a message")
 async def toxicity(interaction: discord.Interaction, text: str):
     result = predictor.predict(text)
@@ -130,3 +124,6 @@ async def toxicity(interaction: discord.Interaction, text: str):
         f"Score: **{score}%**\n"
         f"Label: **{label.upper()}**"
     )
+
+# Run the bot (this is the last line — it starts the event loop)
+bot.run(TOKEN)
