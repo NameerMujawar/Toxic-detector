@@ -1,5 +1,6 @@
 import discord
 import os
+from discord.ext import commands
 from discord import app_commands
 from datetime import datetime
 from dotenv import load_dotenv
@@ -16,7 +17,7 @@ intents = discord.Intents.default()
 intents.message_content = True   # needed to read message text
 intents.members = True            # needed to DM users
 
-bot = discord.Client(intents=intents)
+bot = commands.Bot(command_prefix="!", intents=intents)
 predictor = ToxicityPredictor()    # load the ML model once at startup
 
 # Track warnings per user (in-memory; resets on restart)
