@@ -24,7 +24,8 @@ class ToxicityPredictor:
         "chutiya", "bkl", "mc", "bc", "madarchod",
         "behenchod", "gandu", "harami", "kutte",
         "lavde", "lund", "randi","hijde","neech","gand","aand","zhaatu",
-        "zhaat","lode",]
+        "zhaat","lode","bhosdike","madarchod","behen ke lode","chodu",
+        "gaand","bhenchod"]
 
         msg_lower = message.lower()
 
