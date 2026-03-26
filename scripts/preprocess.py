@@ -1,8 +1,11 @@
 import re
 import string
 import pandas as pd
+import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+nltk.download('stopwords')
+nltk.download('punkt')
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 import pickle
